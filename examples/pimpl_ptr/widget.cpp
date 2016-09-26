@@ -19,9 +19,11 @@ Widget::~Widget() {}
 void Widget::foo() const
 {
     d_->foo();
+    (*d_).foo();
 }
 
 void Widget::foo()
 {
     d_->foo();
+    (*d_).foo();
 }

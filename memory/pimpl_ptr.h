@@ -18,19 +18,22 @@ public:
     PimplPtr(PimplPtr&&) noexcept = default;
     PimplPtr& operator =(PimplPtr&&) noexcept = default;
 
+    PimplPtr(const PimplPtr&) noexcept = delete;
+    PimplPtr& operator =(const PimplPtr&) noexcept = delete;
+
     ~PimplPtr() {
         static_assert(sizeof(T) > 0, "Probably, you forgot to declare destructor explicitly");
     }
 
-    constexpr const ElementType* operator->() const noexcept { return p_.get(); }
-    constexpr const ElementType& operator*() const noexcept { return p_.get(); }
-    constexpr const ElementType* get() const noexcept { return p_.get(); }
-    constexpr operator const ElementType*() const noexcept { return p_.get(); }
+    const ElementType* get() const noexcept { return p_.get(); }
+    const ElementType* operator->() const noexcept { return get(); }
+    const ElementType& operator*() const noexcept { return *get(); }
+    operator const ElementType*() const noexcept { return get(); }
 
-    constexpr ElementType* operator->() noexcept { return p_.get(); }
-    constexpr ElementType& operator*() noexcept { return p_.get(); }
-    constexpr ElementType* get() noexcept { return p_.get(); }
-    constexpr operator ElementType*() noexcept { return p_.get(); }
+    ElementType* get() noexcept { return p_.get(); }
+    ElementType* operator->() noexcept { return get(); }
+    ElementType& operator*() noexcept { return *get(); }
+    operator ElementType*() noexcept { return get(); }
 
 private:
     std::unique_ptr<T> p_; ///> Should be non-const for move semantic
