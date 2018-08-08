@@ -16,11 +16,11 @@ public:
     }
     explicit PimplPtr(std::unique_ptr<T>&& p) noexcept: p_(std::move(p)) { assert(p_ != nullptr); }
 
-    PimplPtr(PimplPtr&&) noexcept = default;
-    PimplPtr& operator =(PimplPtr&&) noexcept = default;
+    PimplPtr(PimplPtr&&) = delete;
+    PimplPtr& operator =(PimplPtr&&) = delete;
 
-    PimplPtr(const PimplPtr&) noexcept = delete;
-    PimplPtr& operator =(const PimplPtr&) noexcept = delete;
+    PimplPtr(const PimplPtr&) = delete;
+    PimplPtr& operator =(const PimplPtr&) = delete;
 
     ~PimplPtr() {
         static_assert(sizeof(T) > 0, "Probably, you forgot to declare destructor explicitly");
